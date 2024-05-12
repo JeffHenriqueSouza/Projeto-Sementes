@@ -16,17 +16,18 @@ exports.DatabaseModule = DatabaseModule;
 exports.DatabaseModule = DatabaseModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            config_1.ConfigModule.forRoot(),
             typeorm_1.TypeOrmModule.forRootAsync({
                 imports: [config_1.ConfigModule],
-                useFactory: (configService) => ({
+                useFactory: async (configService) => ({
                     type: 'postgres',
                     host: configService.get('DB_HOST', 'localhost'),
                     port: configService.get('DB_PORT', 5432),
                     username: configService.get('DB_USERNAME', 'postgres'),
                     password: configService.get('DB_PASSWORD', 'root'),
-                    database: configService.get('DB_DATABASE', 'posteres'),
+                    database: configService.get('DB_DATABASE', 'postgres'),
                     synchronize: configService.get('DB_SYNCHRONIZE', true),
-                    entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+                    autoLoadEntities: true,
                 }),
                 inject: [config_1.ConfigService],
             }),
