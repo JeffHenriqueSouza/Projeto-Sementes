@@ -1,5 +1,5 @@
 {
-  "name": "Projeto-Camp",
+  "name": "Projeto-Sementes",
   "version": "0.0.1",
   "description": "",
   "author": "Jefferson Souza",
@@ -17,7 +17,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm:migration": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:run --dataSource src/database/ormconfig.json"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -29,6 +30,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "dotenv": "^16.4.5",
+    "lodash": "^4.17.21",
     "nanoid": "^3.3.7",
     "pg": "^8.11.5",
     "reflect-metadata": "^0.2.0",

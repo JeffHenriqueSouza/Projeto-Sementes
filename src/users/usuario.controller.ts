@@ -1,14 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
+// usuario.controller.ts
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
 import { AtualizaUsuarioDTO } from './dto/update-user.dto';
 import { CriaUsuarioDTO } from './dto/create-user.dto';
 import { ListaUsuarioDTO } from './dto/ListaUsuario.dto';
 import { UsuarioEntity } from './entity/usuario.entity'; 
-import { UsuarioRepository } from './usuario.repository';
+import { UsuarioService } from './usuario.service'; // Importe o UsuarioService
 
 @Controller('/usuarios')
 export class UsuarioController {
-  constructor(private usuarioRepository: UsuarioRepository) {}
+  constructor(private usuarioService: UsuarioService) {} // Injete o UsuarioService
 
   @Post()
   @UsePipes(new ValidationPipe())
@@ -18,8 +19,10 @@ export class UsuarioController {
     usuarioEntity.senha = dadosDoUsuario.senha;
     usuarioEntity.nome = dadosDoUsuario.nome;
     usuarioEntity.id = uuid();
+    usuarioEntity.cargo = dadosDoUsuario.cargo;
 
-    await this.usuarioRepository.salvar(usuarioEntity);
+    // Use o serviço para salvar o usuário
+    await this.usuarioService.salvar(usuarioEntity);
 
     return {
       usuario: new ListaUsuarioDTO(usuarioEntity.id, usuarioEntity.nome),
@@ -29,12 +32,8 @@ export class UsuarioController {
 
   @Get()
   async listUsuarios() {
-    const usuariosSalvos = await this.usuarioRepository.listar();
-    const usuariosLista = usuariosSalvos.map(
-      (usuario) => new ListaUsuarioDTO(usuario.id, usuario.nome),
-    );
-
-    return usuariosLista;
+    // Use o serviço para listar os usuários
+    return await this.usuarioService.listar();
   }
 
   @Put('/:id')
@@ -43,10 +42,8 @@ export class UsuarioController {
     @Param('id') id: string,
     @Body() novosDados: AtualizaUsuarioDTO,
   ) {
-    const usuarioAtualizado = await this.usuarioRepository.atualiza(
-      id,
-      novosDados,
-    );
+    // Use o serviço para atualizar o usuário
+    const usuarioAtualizado = await this.usuarioService.atualiza(id, novosDados);
 
     return {
       usuario: usuarioAtualizado,
@@ -56,11 +53,21 @@ export class UsuarioController {
 
   @Delete('/:id')
   async removeUsuario(@Param('id') id: string) {
-    const usuarioRemovido = await this.usuarioRepository.remove(id);
+    // Use o serviço para remover o usuário
+    const usuarioRemovido = await this.usuarioService.remove(id);
 
     return {
       usuario: usuarioRemovido,
       mensagem: 'usuário removido com sucesso',
     };
+  }
+
+  @Get('/buscar')
+  async buscarUsuarios(
+    @Query('nome') nome: string,
+    @Query('cargo') cargo: string,
+  ) {
+    // Use o serviço para buscar usuários e retorne apenas o nome e o cargo
+    return await this.usuarioService.buscarPorNomeECargo(nome, cargo);
   }
 }

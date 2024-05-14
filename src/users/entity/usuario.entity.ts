@@ -13,4 +13,8 @@ export class UsuarioEntity {
 
   @Column()
   senha: string = '';
+
+  @Column({ nullable: true })
+  cargo: string;
+
 }

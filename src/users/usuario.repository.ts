@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 import { UsuarioEntity } from './entity/usuario.entity'; 
 
 @Injectable()
@@ -11,7 +11,8 @@ export class UsuarioRepository {
   ) {}
 
   async salvar(usuario: UsuarioEntity ) {
-    return await this.userRepository.save(usuario);
+    const objeto = this.userRepository.create(usuario);
+    return await this.userRepository.save(objeto);
   }
 
   async listar() {
@@ -23,7 +24,6 @@ export class UsuarioRepository {
     return !!possivelUsuario;
   }
   
-
   async buscaPorId(id: string) {
     const usuario = await this.userRepository.findOne({ where: { id } });
     if (!usuario) {
@@ -32,7 +32,6 @@ export class UsuarioRepository {
     return usuario;
   }
   
-
   async atualiza(id: string, dadosDeAtualizacao: Partial<UsuarioEntity >) {
     await this.userRepository.update(id, dadosDeAtualizacao);
     return await this.buscaPorId(id);
@@ -47,5 +46,18 @@ export class UsuarioRepository {
     console.log(`Usuário removido com sucesso`);
   
     return usuarioRemovido;
+  }
+
+  // Métodos de pesquisa adicionados
+  async buscarPorNome(nome: string) {
+    return await this.userRepository.find({ where: { nome: Like(`%${nome}%`) } });
+  }
+
+  async buscarPorCargo(cargo: string) {
+    return await this.userRepository.find({ where: { cargo: Like(`%${cargo}%`) } });
+  }
+
+  async buscarPorNomeECargo(nome: string, cargo: string) {
+    return await this.userRepository.find({ where: { nome, cargo } });
   }
 }
