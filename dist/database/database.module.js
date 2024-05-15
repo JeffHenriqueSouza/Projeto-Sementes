@@ -23,11 +23,11 @@ exports.DatabaseModule = DatabaseModule = __decorate([
                 inject: [config_1.ConfigService],
                 useFactory: async (configService) => ({
                     type: 'postgres',
-                    host: configService.get('DB_HOST', 'localhost'),
+                    host: configService.get('DB_HOST', 'dpg-cp0m0hq1hbls73ecst90-a'),
                     port: configService.get('DB_PORT', 5432),
-                    username: configService.get('DB_USERNAME', 'postgres'),
-                    password: configService.get('DB_PASSWORD', 'root'),
-                    database: configService.get('DB_DATABASE', 'postgres'),
+                    username: configService.get('DB_USERNAME', 'postgres_41hc_user'),
+                    password: configService.get('DB_PASSWORD', 'kKhMMv5hsfKAYHCcOTb1mYCLEajuaBqp'),
+                    database: configService.get('DB_DATABASE', 'postgres_41hc'),
                     entities: [(0, path_1.join)(__dirname, '/../**/*.entity{.ts,.js}')],
                     migrations: [(0, path_1.join)(__dirname, '/../database/migrations/*{.ts,.js}')],
                     cli: {

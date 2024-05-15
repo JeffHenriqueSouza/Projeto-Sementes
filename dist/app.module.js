@@ -14,6 +14,7 @@ const usuario_module_1 = require("./users/usuario.module");
 const config_1 = require("@nestjs/config");
 const database_module_1 = require("./database/database.module");
 const avaliacao_module_1 = require("./avalia\u00E7\u00F5es/avaliacao.module");
+const feedback_module_1 = require("./feedback/feedback.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -26,6 +27,7 @@ exports.AppModule = AppModule = __decorate([
             usuario_module_1.UsuarioModule,
             database_module_1.DatabaseModule,
             avaliacao_module_1.AvaliacaoModule,
+            feedback_module_1.FeedbackModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

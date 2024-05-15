@@ -12,12 +12,13 @@ const typeorm_1 = require("@nestjs/typeorm");
 const avaliacao_controller_1 = require("./avaliacao.controller");
 const avaliacao_service_1 = require("./avaliacao.service");
 const avaliacao_entity_1 = require("./avaliacao.entity");
+const avaliacao_repository_1 = require("./avaliacao.repository");
 let AvaliacaoModule = class AvaliacaoModule {
 };
 exports.AvaliacaoModule = AvaliacaoModule;
 exports.AvaliacaoModule = AvaliacaoModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([avaliacao_entity_1.AvaliacaoEntity])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([avaliacao_entity_1.AvaliacaoEntity, avaliacao_repository_1.AvaliacaoEntityRepository])],
         controllers: [avaliacao_controller_1.AvaliacaoController],
         providers: [avaliacao_service_1.AvaliacaoService],
     })

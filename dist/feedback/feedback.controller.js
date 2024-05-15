@@ -12,49 +12,47 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppController = void 0;
+exports.FeedbackController = void 0;
 const common_1 = require("@nestjs/common");
-const app_service_1 = require("./app.service");
-const create_feedback_dto_1 = require("./feedback/dto/create-feedback.dto");
-const feedbacks_service_1 = require("./feedback/feedbacks.service");
-let AppController = class AppController {
-    constructor(appService, feedbackService) {
-        this.appService = appService;
+const feedbacks_service_1 = require("./feedbacks.service");
+const create_feedback_dto_1 = require("./dto/create-feedback.dto");
+let FeedbackController = class FeedbackController {
+    constructor(feedbackService) {
         this.feedbackService = feedbackService;
     }
-    getHello() {
-        return this.appService.getHello();
-    }
-    async createFeedback(createFeedbackDto) {
+    async create(createFeedbackDto) {
         return this.feedbackService.create(createFeedbackDto);
     }
-    async getAllFeedbacks() {
-        return this.feedbackService.findAll();
+    async findAll() {
+        return await this.feedbackService.generateFeedbacks();
+    }
+    async getFeedbackForUser(userId) {
+        return this.feedbackService.getFeedbackForUser(userId);
     }
 };
-exports.AppController = AppController;
+exports.FeedbackController = FeedbackController;
 __decorate([
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", String)
-], AppController.prototype, "getHello", null);
-__decorate([
-    (0, common_1.Post)('feedbacks'),
+    (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_feedback_dto_1.CreateFeedbackDto]),
     __metadata("design:returntype", Promise)
-], AppController.prototype, "createFeedback", null);
+], FeedbackController.prototype, "create", null);
 __decorate([
-    (0, common_1.Get)('feedbacks'),
+    (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], AppController.prototype, "getAllFeedbacks", null);
-exports.AppController = AppController = __decorate([
-    (0, common_1.Controller)(),
-    __metadata("design:paramtypes", [app_service_1.AppService,
-        feedbacks_service_1.FeedbacksService])
-], AppController);
-//# sourceMappingURL=app.controller.js.map
+], FeedbackController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)('/user/:userId'),
+    __param(0, (0, common_1.Param)('userId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], FeedbackController.prototype, "getFeedbackForUser", null);
+exports.FeedbackController = FeedbackController = __decorate([
+    (0, common_1.Controller)('/feedbacks'),
+    __metadata("design:paramtypes", [feedbacks_service_1.FeedbacksService])
+], FeedbackController);
+//# sourceMappingURL=feedback.controller.js.map
