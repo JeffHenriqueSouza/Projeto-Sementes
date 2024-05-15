@@ -22,7 +22,7 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             config_1.ConfigModule.forRoot({
-                envFilePath: ['.env'],
+                envFilePath: ['.env', '.env.production'],
             }),
             usuario_module_1.UsuarioModule,
             database_module_1.DatabaseModule,

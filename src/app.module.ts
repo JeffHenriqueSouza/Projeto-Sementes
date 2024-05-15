@@ -10,7 +10,7 @@ import { FeedbackModule } from './feedback/feedback.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['.env'],
+      envFilePath: ['.env', '.env.production'],
     }),
     UsuarioModule, 
     DatabaseModule,

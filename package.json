@@ -33,6 +33,7 @@
     "lodash": "^4.17.21",
     "nanoid": "^3.3.7",
     "pg": "^8.11.5",
+    "pg-hstore": "^2.3.4",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
     "sqlite3": "^5.1.7",
