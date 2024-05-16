@@ -24,7 +24,7 @@ let FeedbackController = class FeedbackController {
         return this.feedbackService.create(createFeedbackDto);
     }
     async findAll() {
-        return await this.feedbackService.generateFeedbacks();
+        return await this.feedbackService.findAll();
     }
     async getFeedbackForUser(userId) {
         return this.feedbackService.getFeedbackForUser(userId);

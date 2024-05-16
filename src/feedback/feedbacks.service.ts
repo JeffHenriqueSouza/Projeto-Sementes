@@ -24,13 +24,6 @@ export class FeedbacksService {
     return await this.feedbackRepository.find();
   }
 
-  async generateFeedbacks(): Promise<string[]> {
-    const avaliacoes = await this.avaliacaoRepository.find();
-    const media = this.calculateAverage(avaliacoes);
-    const feedback = this.generateFeedback(media);
-    return [feedback];
-  }
-
   async getFeedbackForUser(userId: string): Promise<string> {
     const avaliacoes = await this.avaliacaoRepository.find({ where: { usuarioAvaliadoId: userId } });
 

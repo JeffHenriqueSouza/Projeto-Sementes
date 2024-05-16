@@ -31,12 +31,6 @@ let FeedbacksService = class FeedbacksService {
     async findAll() {
         return await this.feedbackRepository.find();
     }
-    async generateFeedbacks() {
-        const avaliacoes = await this.avaliacaoRepository.find();
-        const media = this.calculateAverage(avaliacoes);
-        const feedback = this.generateFeedback(media);
-        return [feedback];
-    }
     async getFeedbackForUser(userId) {
         const avaliacoes = await this.avaliacaoRepository.find({ where: { usuarioAvaliadoId: userId } });
         if (avaliacoes.length === 0) {

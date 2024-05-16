@@ -8,7 +8,6 @@ export declare class FeedbacksService {
     constructor(feedbackRepository: Repository<Feedback>, avaliacaoRepository: Repository<AvaliacaoEntity>);
     create(createFeedbackDto: CreateFeedbackDto): Promise<Feedback>;
     findAll(): Promise<Feedback[]>;
-    generateFeedbacks(): Promise<string[]>;
     getFeedbackForUser(userId: string): Promise<string>;
     private calculateAverage;
     private generateFeedback;

@@ -23,7 +23,7 @@ import { join } from 'path'; // Importante para construir os caminhos para as en
                 },
                 synchronize: true,
                 "logging": true,
-                 
+                 // Sincroniza automaticamente o esquema do banco de dados com as entidades do TypeORM (apenas para ambiente de desenvolvimento)
             }),
         }),
     ],

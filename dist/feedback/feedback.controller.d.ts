@@ -5,6 +5,6 @@ export declare class FeedbackController {
     private readonly feedbackService;
     constructor(feedbackService: FeedbacksService);
     create(createFeedbackDto: CreateFeedbackDto): Promise<Feedback>;
-    findAll(): Promise<string[]>;
+    findAll(): Promise<Feedback[]>;
     getFeedbackForUser(userId: string): Promise<string>;
 }

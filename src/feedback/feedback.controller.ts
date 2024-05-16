@@ -13,13 +13,12 @@ export class FeedbackController {
   }
 
   @Get()
-  async findAll(): Promise<string[]> {
-    return await this.feedbackService.generateFeedbacks();
+  async findAll(): Promise<Feedback[]> {
+    return await this.feedbackService.findAll();
   }
   
   @Get('/user/:userId')
-async getFeedbackForUser(@Param('userId') userId: string): Promise<string> {
-  return this.feedbackService.getFeedbackForUser(userId);
-}
-
+  async getFeedbackForUser(@Param('userId') userId: string): Promise<string> {
+    return this.feedbackService.getFeedbackForUser(userId);
+  }
 }
