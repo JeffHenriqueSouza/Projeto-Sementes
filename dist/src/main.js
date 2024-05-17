@@ -6,6 +6,12 @@ const dotenv = require("dotenv");
 async function bootstrap() {
     dotenv.config();
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    app.enableCors({
+        origin: true,
+        methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH'],
+        exposedHeaders: ['Authorization'],
+        credentials: true,
+    });
     await app.listen(3000);
 }
 bootstrap().then(() => {
