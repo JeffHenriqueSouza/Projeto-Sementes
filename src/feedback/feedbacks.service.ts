@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Feedback } from './feedback.entity';
 import { CreateFeedbackDto } from './dto/create-feedback.dto';
-import { AvaliacaoEntity } from 'avaliações/avaliacao.entity';
+import { AvaliacaoEntity } from 'avaliacao/avaliacao.entity';
 
 
 @Injectable()

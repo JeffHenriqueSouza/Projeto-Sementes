@@ -1,7 +1,7 @@
 import { Repository } from 'typeorm';
 import { Feedback } from './feedback.entity';
 import { CreateFeedbackDto } from './dto/create-feedback.dto';
-import { AvaliacaoEntity } from 'avaliações/avaliacao.entity';
+import { AvaliacaoEntity } from 'avaliacao/avaliacao.entity';
 export declare class FeedbacksService {
     private feedbackRepository;
     private avaliacaoRepository;

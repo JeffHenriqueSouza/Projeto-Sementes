@@ -48,7 +48,7 @@ export class UsuarioRepository {
     return usuarioRemovido;
   }
 
-  // Métodos de pesquisa adicionados
+ 
   async buscarPorNome(nome: string) {
     return await this.userRepository.find({ where: { nome: Like(`%${nome}%`) } });
   }

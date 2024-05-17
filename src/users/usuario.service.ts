@@ -1,4 +1,3 @@
-// usuario.service.ts
 import { Injectable } from '@nestjs/common';
 import { UsuarioRepository } from './usuario.repository';
 import { UsuarioEntity } from './entity/usuario.entity';
@@ -25,7 +24,6 @@ export class UsuarioService {
   }
 
   async buscarPorNomeECargo(nome: string, cargo: string) {
-    // Certifique-se de que está usando o nome e o cargo para filtrar os usuários
     return await this.usuarioRepository.buscarPorNomeECargo(nome, cargo);
   }
 }

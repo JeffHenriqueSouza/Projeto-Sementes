@@ -21,7 +21,7 @@ export class UsuarioController {
     usuarioEntity.id = uuid();
     usuarioEntity.cargo = dadosDoUsuario.cargo;
 
-    // Use o serviço para salvar o usuário
+    
     await this.usuarioService.salvar(usuarioEntity);
 
     return {
@@ -32,7 +32,7 @@ export class UsuarioController {
 
   @Get()
   async listUsuarios() {
-    // Use o serviço para listar os usuários
+    
     return await this.usuarioService.listar();
   }
 
@@ -42,7 +42,7 @@ export class UsuarioController {
     @Param('id') id: string,
     @Body() novosDados: AtualizaUsuarioDTO,
   ) {
-    // Use o serviço para atualizar o usuário
+    
     const usuarioAtualizado = await this.usuarioService.atualiza(id, novosDados);
 
     return {
@@ -53,7 +53,7 @@ export class UsuarioController {
 
   @Delete('/:id')
   async removeUsuario(@Param('id') id: string) {
-    // Use o serviço para remover o usuário
+   
     const usuarioRemovido = await this.usuarioService.remove(id);
 
     return {
@@ -67,7 +67,7 @@ export class UsuarioController {
     @Query('nome') nome: string,
     @Query('cargo') cargo: string,
   ) {
-    // Use o serviço para buscar usuários e retorne apenas o nome e o cargo
+   
     return await this.usuarioService.buscarPorNomeECargo(nome, cargo);
   }
 }

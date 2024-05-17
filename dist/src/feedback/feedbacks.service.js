@@ -17,7 +17,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const feedback_entity_1 = require("./feedback.entity");
-const avaliacao_entity_1 = require("../avalia\u00E7\u00F5es/avaliacao.entity");
+const avaliacao_entity_1 = require("../avaliacao/avaliacao.entity");
 let FeedbacksService = class FeedbacksService {
     constructor(feedbackRepository, avaliacaoRepository) {
         this.feedbackRepository = feedbackRepository;

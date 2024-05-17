@@ -13,7 +13,7 @@ const app_service_1 = require("./app.service");
 const usuario_module_1 = require("./users/usuario.module");
 const config_1 = require("@nestjs/config");
 const database_module_1 = require("./database/database.module");
-const avaliacao_module_1 = require("./avalia\u00E7\u00F5es/avaliacao.module");
+const avaliacao_module_1 = require("./avaliacao/avaliacao.module");
 const feedback_module_1 = require("./feedback/feedback.module");
 let AppModule = class AppModule {
 };

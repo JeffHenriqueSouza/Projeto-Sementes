@@ -16,7 +16,7 @@ import { join } from 'path';
         username: configService.get('DB_USERNAME', 'postgres'),
         password: configService.get('DB_PASSWORD', 'root'),
         database: configService.get('DB_DATABASE', 'postgres'),
-        entities: [join(__dirname, '/../**/*.entity{.ts,.js}')],  // Inclui todas as entidades
+        entities: [join(__dirname, '/../**/*.entity{.ts,.js}')], 
         migrations: [join(__dirname, '/../database/migrations/*{.ts,.js}')],
         cli: {
           migrationsDir: 'src/database/migrations',

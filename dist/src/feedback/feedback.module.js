@@ -12,9 +12,9 @@ const typeorm_1 = require("@nestjs/typeorm");
 const feedback_entity_1 = require("./feedback.entity");
 const feedback_controller_1 = require("./feedback.controller");
 const feedbacks_service_1 = require("./feedbacks.service");
-const avaliacao_module_1 = require("../avalia\u00E7\u00F5es/avaliacao.module");
-const avaliacao_entity_1 = require("../avalia\u00E7\u00F5es/avaliacao.entity");
-const avaliacao_repository_1 = require("../avalia\u00E7\u00F5es/avaliacao.repository");
+const avaliacao_module_1 = require("../avaliacao/avaliacao.module");
+const avaliacao_entity_1 = require("../avaliacao/avaliacao.entity");
+const avaliacao_repository_1 = require("../avaliacao/avaliacao.repository");
 let FeedbackModule = class FeedbackModule {
 };
 exports.FeedbackModule = FeedbackModule;
