@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity('avaliacoes')
 export class AvaliacaoEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;

@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
 import { AppService } from './app.service';
-import { CreateFeedbackDto } from './feedback/dto/create-feedback.dto'; // Importe o DTO para criar feedbacks
+import { CreateFeedbackDto } from '/feedback/dto/create-feedback.dto'; // Importe o DTO para criar feedbacks
 import { Feedback } from './feedback/feedback.entity'; // Importe a entidade de feedback
-import { FeedbacksService } from './feedback/feedbacks.service'; // Importe o serviço de feedback
+import { FeedbacksService } from 'feedback/feedbacks.service';  // Importe o serviço de feedback
 
 @Controller()
 export class AppController {

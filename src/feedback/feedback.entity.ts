@@ -1,5 +1,3 @@
-// feedback.entity.ts
-
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -8,8 +6,10 @@ export class Feedback {
   id: string;
 
   @Column()
-  userId: string; // ID do usuário associado ao feedback
+  userId: string; 
 
   @Column()
-  message: string; // Mensagem de feedback
+  message: string; 
+
+  
 }

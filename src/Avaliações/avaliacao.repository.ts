@@ -1,5 +1,12 @@
-import { EntityRepository, Repository } from 'typeorm';
+import {  Repository } from 'typeorm';
 import { AvaliacaoEntity } from './avaliacao.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
-@EntityRepository(AvaliacaoEntity)
-export class AvaliacaoEntityRepository extends Repository<AvaliacaoEntity> {}
+export class AvaliacaoEntityRepository {
+
+    constructor(
+        @InjectRepository(AvaliacaoEntity)
+        private avaliacaoRepository: Repository<AvaliacaoEntity >,
+      ) {}
+}
+
