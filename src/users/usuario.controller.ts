@@ -1,27 +1,32 @@
-// usuario.controller.ts
 import { Body, Controller, Delete, Get, Param, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
+import * as bcrypt from 'bcrypt';
 import { AtualizaUsuarioDTO } from './dto/update-user.dto';
 import { CriaUsuarioDTO } from './dto/create-user.dto';
 import { ListaUsuarioDTO } from './dto/ListaUsuario.dto';
 import { UsuarioEntity } from './entity/usuario.entity'; 
-import { UsuarioService } from './usuario.service'; // Importe o UsuarioService
+import { UsuarioService } from './usuario.service';
+import { AuthService } from '../auth/auth.service';
+import { LoginDTO } from './dto/login.dto';
+import { RegisterDTO } from './dto/register.dto';
 
 @Controller('/usuarios')
 export class UsuarioController {
-  constructor(private usuarioService: UsuarioService) {} // Injete o UsuarioService
+  constructor(
+    private usuarioService: UsuarioService,
+    private authService: AuthService
+  ) {}
 
   @Post()
   @UsePipes(new ValidationPipe())
   async criaUsuario(@Body() dadosDoUsuario: CriaUsuarioDTO) {
     const usuarioEntity = new UsuarioEntity(); 
     usuarioEntity.email = dadosDoUsuario.email;
-    usuarioEntity.senha = dadosDoUsuario.senha;
+    usuarioEntity.senha = await bcrypt.hash(dadosDoUsuario.senha, 10);
     usuarioEntity.nome = dadosDoUsuario.nome;
     usuarioEntity.id = uuid();
     usuarioEntity.cargo = dadosDoUsuario.cargo;
 
-    
     await this.usuarioService.salvar(usuarioEntity);
 
     return {
@@ -32,7 +37,6 @@ export class UsuarioController {
 
   @Get()
   async listUsuarios() {
-    
     return await this.usuarioService.listar();
   }
 
@@ -42,7 +46,6 @@ export class UsuarioController {
     @Param('id') id: string,
     @Body() novosDados: AtualizaUsuarioDTO,
   ) {
-    
     const usuarioAtualizado = await this.usuarioService.atualiza(id, novosDados);
 
     return {
@@ -53,7 +56,6 @@ export class UsuarioController {
 
   @Delete('/:id')
   async removeUsuario(@Param('id') id: string) {
-   
     const usuarioRemovido = await this.usuarioService.remove(id);
 
     return {
@@ -67,7 +69,31 @@ export class UsuarioController {
     @Query('nome') nome: string,
     @Query('cargo') cargo: string,
   ) {
-   
     return await this.usuarioService.buscarPorNomeECargo(nome, cargo);
+  }
+
+  @Post('/login')
+  @UsePipes(new ValidationPipe())
+  async login(@Body() loginDTO: LoginDTO) {
+    const user = await this.usuarioService.validateUser(loginDTO.username, loginDTO.password);
+    if (!user) {
+      return {
+        message: 'Invalid credentials',
+      };
+    }
+    
+    return this.authService.login(user);
+  }
+
+  @Post('/register')
+  @UsePipes(new ValidationPipe())
+  async register(@Body() registerDTO: RegisterDTO) {
+    const existingUser = await this.usuarioService.findOneByEmail(registerDTO.email);
+    if (existingUser) {
+      return { message: 'E-mail já registrado' };
+    }
+
+    const newUser = await this.usuarioService.register(registerDTO);
+    return { message: 'Usuário registrado com sucesso', user: newUser };
   }
 }

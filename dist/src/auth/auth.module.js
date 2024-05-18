@@ -6,29 +6,28 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UsuarioModule = void 0;
+exports.AuthModule = void 0;
 const common_1 = require("@nestjs/common");
-const typeorm_1 = require("@nestjs/typeorm");
-const usuario_controller_1 = require("./usuario.controller");
-const usuario_service_1 = require("./usuario.service");
-const usuario_repository_1 = require("./usuario.repository");
-const usuario_entity_1 = require("./entity/usuario.entity");
 const jwt_1 = require("@nestjs/jwt");
-const auth_service_1 = require("../auth/auth.service");
-let UsuarioModule = class UsuarioModule {
+const passport_1 = require("@nestjs/passport");
+const jwt_strategy_1 = require("./jwt.strategy");
+const auth_service_1 = require("./auth.service");
+const usuario_module_1 = require("../users/usuario.module");
+let AuthModule = class AuthModule {
 };
-exports.UsuarioModule = UsuarioModule;
-exports.UsuarioModule = UsuarioModule = __decorate([
+exports.AuthModule = AuthModule;
+exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forFeature([usuario_entity_1.UsuarioEntity]),
+            passport_1.PassportModule,
             jwt_1.JwtModule.register({
                 secret: 'your_jwt_secret',
                 signOptions: { expiresIn: '60m' },
             }),
+            (0, common_1.forwardRef)(() => usuario_module_1.UsuarioModule),
         ],
-        controllers: [usuario_controller_1.UsuarioController],
-        providers: [usuario_service_1.UsuarioService, usuario_repository_1.UsuarioRepository, auth_service_1.AuthService],
+        providers: [auth_service_1.AuthService, jwt_strategy_1.JwtStrategy],
+        exports: [auth_service_1.AuthService],
     })
-], UsuarioModule);
-//# sourceMappingURL=usuario.module.js.map
+], AuthModule);
+//# sourceMappingURL=auth.module.js.map

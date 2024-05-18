@@ -5,7 +5,7 @@ import { UsuarioModule } from './users/usuario.module';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { AvaliacaoModule } from './avaliacao/avaliacao.module';
-import { FeedbackModule } from '/feedback/feedback.module'; 
+import { FeedbackModule } from './feedback/feedback.module'; // Corrigindo o caminho de importação
 
 @Module({
   imports: [
@@ -15,7 +15,7 @@ import { FeedbackModule } from '/feedback/feedback.module';
     UsuarioModule, 
     DatabaseModule,
     AvaliacaoModule,
-    FeedbackModule, 
+    FeedbackModule, // Corrigindo o módulo importado
   ],
   controllers: [AppController],
   providers: [AppService],

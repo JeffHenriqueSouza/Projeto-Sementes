@@ -44,11 +44,8 @@ let UsuarioRepository = class UsuarioRepository {
         return await this.buscaPorId(id);
     }
     async remove(id) {
-        console.log(`Removendo usuário com id: ${id}`);
         const usuarioRemovido = await this.buscaPorId(id);
-        console.log(`Usuário encontrado para remoção: ${usuarioRemovido}`);
         await this.userRepository.delete(id);
-        console.log(`Usuário removido com sucesso`);
         return usuarioRemovido;
     }
     async buscarPorNome(nome) {
@@ -59,6 +56,14 @@ let UsuarioRepository = class UsuarioRepository {
     }
     async buscarPorNomeECargo(nome, cargo) {
         return await this.userRepository.find({ where: { nome, cargo } });
+    }
+    async findOneByUsername(username) {
+        const user = await this.userRepository.findOne({ where: { nome: username } });
+        return user || undefined;
+    }
+    async findOneByEmail(email) {
+        const user = await this.userRepository.findOne({ where: { email } });
+        return user || undefined;
     }
 };
 exports.UsuarioRepository = UsuarioRepository;

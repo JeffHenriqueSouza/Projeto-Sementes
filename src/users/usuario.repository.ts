@@ -6,11 +6,11 @@ import { UsuarioEntity } from './entity/usuario.entity';
 @Injectable()
 export class UsuarioRepository {
   constructor(
-    @InjectRepository(UsuarioEntity )
-    private userRepository: Repository<UsuarioEntity >,
+    @InjectRepository(UsuarioEntity)
+    private userRepository: Repository<UsuarioEntity>,
   ) {}
 
-  async salvar(usuario: UsuarioEntity ) {
+  async salvar(usuario: UsuarioEntity) {
     const objeto = this.userRepository.create(usuario);
     return await this.userRepository.save(objeto);
   }
@@ -23,7 +23,7 @@ export class UsuarioRepository {
     const possivelUsuario = await this.userRepository.findOne({ where: { email } });
     return !!possivelUsuario;
   }
-  
+
   async buscaPorId(id: string) {
     const usuario = await this.userRepository.findOne({ where: { id } });
     if (!usuario) {
@@ -31,24 +31,18 @@ export class UsuarioRepository {
     }
     return usuario;
   }
-  
-  async atualiza(id: string, dadosDeAtualizacao: Partial<UsuarioEntity >) {
+
+  async atualiza(id: string, dadosDeAtualizacao: Partial<UsuarioEntity>) {
     await this.userRepository.update(id, dadosDeAtualizacao);
     return await this.buscaPorId(id);
   }
 
   async remove(id: string) {
-    console.log(`Removendo usuário com id: ${id}`);
     const usuarioRemovido = await this.buscaPorId(id);
-    console.log(`Usuário encontrado para remoção: ${usuarioRemovido}`);
-  
     await this.userRepository.delete(id);
-    console.log(`Usuário removido com sucesso`);
-  
     return usuarioRemovido;
   }
 
- 
   async buscarPorNome(nome: string) {
     return await this.userRepository.find({ where: { nome: Like(`%${nome}%`) } });
   }
@@ -59,5 +53,15 @@ export class UsuarioRepository {
 
   async buscarPorNomeECargo(nome: string, cargo: string) {
     return await this.userRepository.find({ where: { nome, cargo } });
+  }
+
+  async findOneByUsername(username: string): Promise<UsuarioEntity | undefined> {
+    const user = await this.userRepository.findOne({ where: { nome: username } });
+    return user || undefined;
+  }
+
+  async findOneByEmail(email: string): Promise<UsuarioEntity | undefined> {
+    const user = await this.userRepository.findOne({ where: { email } });
+    return user || undefined;
   }
 }

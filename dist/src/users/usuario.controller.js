@@ -15,19 +15,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsuarioController = void 0;
 const common_1 = require("@nestjs/common");
 const uuid_1 = require("uuid");
+const bcrypt = require("bcrypt");
 const update_user_dto_1 = require("./dto/update-user.dto");
 const create_user_dto_1 = require("./dto/create-user.dto");
 const ListaUsuario_dto_1 = require("./dto/ListaUsuario.dto");
 const usuario_entity_1 = require("./entity/usuario.entity");
 const usuario_service_1 = require("./usuario.service");
+const auth_service_1 = require("../auth/auth.service");
+const login_dto_1 = require("./dto/login.dto");
+const register_dto_1 = require("./dto/register.dto");
 let UsuarioController = class UsuarioController {
-    constructor(usuarioService) {
+    constructor(usuarioService, authService) {
         this.usuarioService = usuarioService;
+        this.authService = authService;
     }
     async criaUsuario(dadosDoUsuario) {
         const usuarioEntity = new usuario_entity_1.UsuarioEntity();
         usuarioEntity.email = dadosDoUsuario.email;
-        usuarioEntity.senha = dadosDoUsuario.senha;
+        usuarioEntity.senha = await bcrypt.hash(dadosDoUsuario.senha, 10);
         usuarioEntity.nome = dadosDoUsuario.nome;
         usuarioEntity.id = (0, uuid_1.v4)();
         usuarioEntity.cargo = dadosDoUsuario.cargo;
@@ -56,6 +61,23 @@ let UsuarioController = class UsuarioController {
     }
     async buscarUsuarios(nome, cargo) {
         return await this.usuarioService.buscarPorNomeECargo(nome, cargo);
+    }
+    async login(loginDTO) {
+        const user = await this.usuarioService.validateUser(loginDTO.username, loginDTO.password);
+        if (!user) {
+            return {
+                message: 'Invalid credentials',
+            };
+        }
+        return this.authService.login(user);
+    }
+    async register(registerDTO) {
+        const existingUser = await this.usuarioService.findOneByEmail(registerDTO.email);
+        if (existingUser) {
+            return { message: 'E-mail já registrado' };
+        }
+        const newUser = await this.usuarioService.register(registerDTO);
+        return { message: 'Usuário registrado com sucesso', user: newUser };
     }
 };
 exports.UsuarioController = UsuarioController;
@@ -97,8 +119,25 @@ __decorate([
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], UsuarioController.prototype, "buscarUsuarios", null);
+__decorate([
+    (0, common_1.Post)('/login'),
+    (0, common_1.UsePipes)(new common_1.ValidationPipe()),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [login_dto_1.LoginDTO]),
+    __metadata("design:returntype", Promise)
+], UsuarioController.prototype, "login", null);
+__decorate([
+    (0, common_1.Post)('/register'),
+    (0, common_1.UsePipes)(new common_1.ValidationPipe()),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [register_dto_1.RegisterDTO]),
+    __metadata("design:returntype", Promise)
+], UsuarioController.prototype, "register", null);
 exports.UsuarioController = UsuarioController = __decorate([
     (0, common_1.Controller)('/usuarios'),
-    __metadata("design:paramtypes", [usuario_service_1.UsuarioService])
+    __metadata("design:paramtypes", [usuario_service_1.UsuarioService,
+        auth_service_1.AuthService])
 ], UsuarioController);
 //# sourceMappingURL=usuario.controller.js.map

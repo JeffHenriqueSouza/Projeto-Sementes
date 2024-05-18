@@ -12,4 +12,6 @@ export declare class UsuarioRepository {
     buscarPorNome(nome: string): Promise<UsuarioEntity[]>;
     buscarPorCargo(cargo: string): Promise<UsuarioEntity[]>;
     buscarPorNomeECargo(nome: string, cargo: string): Promise<UsuarioEntity[]>;
+    findOneByUsername(username: string): Promise<UsuarioEntity | undefined>;
+    findOneByEmail(email: string): Promise<UsuarioEntity | undefined>;
 }
