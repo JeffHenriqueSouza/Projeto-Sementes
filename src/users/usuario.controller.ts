@@ -1,5 +1,5 @@
+// usuario.controller.ts
 import { Body, Controller, Delete, Get, Param, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
-import { v4 as uuid } from 'uuid';
 import * as bcrypt from 'bcrypt';
 import { AtualizaUsuarioDTO } from './dto/update-user.dto';
 import { CriaUsuarioDTO } from './dto/create-user.dto';
@@ -24,13 +24,12 @@ export class UsuarioController {
     usuarioEntity.email = dadosDoUsuario.email;
     usuarioEntity.senha = await bcrypt.hash(dadosDoUsuario.senha, 10);
     usuarioEntity.nome = dadosDoUsuario.nome;
-    usuarioEntity.id = uuid();
     usuarioEntity.cargo = dadosDoUsuario.cargo;
 
-    await this.usuarioService.salvar(usuarioEntity);
+    const newUser = await this.usuarioService.salvar(usuarioEntity);
 
     return {
-      usuario: new ListaUsuarioDTO(usuarioEntity.id, usuarioEntity.nome),
+      usuario: new ListaUsuarioDTO(newUser.id, newUser.nome),
       mensagem: 'usuário criado com sucesso',
     };
   }
