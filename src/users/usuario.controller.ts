@@ -1,7 +1,6 @@
-// No seu controlador
 import { Body, Controller, Delete, Get, Param, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
-import { v4 as uuidv4 } from 'uuid';
 import * as bcrypt from 'bcrypt';
+import { v4 as uuidv4 } from 'uuid'; // Adicionando importação para gerar UUID
 import { AtualizaUsuarioDTO } from './dto/update-user.dto';
 import { CriaUsuarioDTO } from './dto/create-user.dto';
 import { ListaUsuarioDTO } from './dto/ListaUsuario.dto';
@@ -21,10 +20,14 @@ export class UsuarioController {
   @Post()
   @UsePipes(new ValidationPipe())
   async criaUsuario(@Body() dadosDoUsuario: CriaUsuarioDTO) {
+    // Gerando UUID
+    const id = uuidv4();
+
     const usuarioEntity = new UsuarioEntity(); 
     usuarioEntity.email = dadosDoUsuario.email;
     usuarioEntity.senha = await bcrypt.hash(dadosDoUsuario.senha, 10);
     usuarioEntity.nome = dadosDoUsuario.nome;
+    usuarioEntity.id = id; // Atribuindo UUID gerado
     usuarioEntity.cargo = dadosDoUsuario.cargo;
 
     const newUser = await this.usuarioService.salvar(usuarioEntity);
@@ -46,11 +49,6 @@ export class UsuarioController {
     @Param('id') id: string,
     @Body() novosDados: AtualizaUsuarioDTO,
   ) {
-    // Se não houver um ID na rota, gere um UUID
-    if (!id) {
-      id = uuidv4();
-    }
-
     const usuarioAtualizado = await this.usuarioService.atualiza(id, novosDados);
 
     return {
@@ -61,11 +59,6 @@ export class UsuarioController {
 
   @Delete('/:id')
   async removeUsuario(@Param('id') id: string) {
-    // Se não houver um ID na rota, gere um UUID
-    if (!id) {
-      id = uuidv4();
-    }
-
     const usuarioRemovido = await this.usuarioService.remove(id);
 
     return {
