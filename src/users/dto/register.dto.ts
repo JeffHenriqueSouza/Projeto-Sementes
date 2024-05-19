@@ -8,7 +8,7 @@ export class RegisterDTO {
   email: string;
 
   @IsString()
-  senha: string;
+  password: string;
 
   @IsString()
   cargo: string;

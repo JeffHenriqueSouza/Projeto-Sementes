@@ -13,7 +13,7 @@ export class AtualizaUsuarioDTO {
 
   // Senha do usuário (deve ter pelo menos 6 caracteres)
   @MinLength(6, { message: 'A senha precisa ter pelo menos 6 caracteres' })
-  senha: string = '';
+  password: string = '';
 
   
 }

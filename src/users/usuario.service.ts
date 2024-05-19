@@ -9,12 +9,12 @@ export class UsuarioService {
   constructor(private usuarioRepository: UsuarioRepository) {}
 
   async register(registerDTO: RegisterDTO): Promise<UsuarioEntity> {
-    const { nome, email, senha, cargo } = registerDTO;
+    const { nome, email, password, cargo } = registerDTO;
   
     const newUser = await this.usuarioRepository.save({
       nome,
       email,
-      senha: await bcrypt.hash(senha, 10),
+      password: await bcrypt.hash(password, 10),
       cargo,
     });
   

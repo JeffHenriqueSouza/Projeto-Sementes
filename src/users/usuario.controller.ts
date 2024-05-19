@@ -23,9 +23,9 @@ export class UsuarioController {
     }
 
     // Antes de salvar o usuário, vamos gerar um hash para a senha
-    const hashedPassword = await bcrypt.hash(registerDTO.senha, 10);
+    const hashedPassword = await bcrypt.hash(registerDTO.password, 10);
     // Substitua a senha no DTO pela senha criptografada
-    registerDTO.senha = hashedPassword;
+    registerDTO.password = hashedPassword;
 
     // Agora registramos o usuário com a senha criptografada
     const newUser = await this.usuarioService.register(registerDTO);
