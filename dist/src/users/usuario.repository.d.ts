@@ -6,4 +6,5 @@ export declare class UsuarioRepository {
     constructor(userRepository: Repository<UsuarioEntity>);
     save(registerDTO: RegisterDTO): Promise<UsuarioEntity>;
     findOneByEmail(email: string): Promise<UsuarioEntity | undefined>;
+    findAllUsers(): Promise<UsuarioEntity[]>;
 }

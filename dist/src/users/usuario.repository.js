@@ -29,6 +29,9 @@ let UsuarioRepository = class UsuarioRepository {
         const usuario = await this.userRepository.findOne({ where: { email } });
         return usuario || undefined;
     }
+    async findAllUsers() {
+        return this.userRepository.find();
+    }
 };
 exports.UsuarioRepository = UsuarioRepository;
 exports.UsuarioRepository = UsuarioRepository = __decorate([

@@ -14,15 +14,12 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsuarioController = void 0;
 const common_1 = require("@nestjs/common");
-const auth_service_1 = require("../auth/auth.service");
-const login_dto_1 = require("./dto/login.dto");
-const register_dto_1 = require("./dto/register.dto");
 const usuario_service_1 = require("./usuario.service");
-const bcrypt = require("bcrypt");
+const register_dto_1 = require("./dto/register.dto");
+const login_dto_1 = require("./dto/login.dto");
 const jwt_1 = require("@nestjs/jwt");
 let UsuarioController = class UsuarioController {
-    constructor(authService, usuarioService, jwtService) {
-        this.authService = authService;
+    constructor(usuarioService, jwtService) {
         this.usuarioService = usuarioService;
         this.jwtService = jwtService;
     }
@@ -31,10 +28,8 @@ let UsuarioController = class UsuarioController {
         if (existingUser) {
             return { message: 'E-mail já registrado' };
         }
-        const hashedPassword = await bcrypt.hash(registerDTO.password, 10);
-        registerDTO.password = hashedPassword;
         const newUser = await this.usuarioService.register(registerDTO);
-        const token = await this.authService.login(newUser);
+        const token = this.jwtService.sign({ userId: newUser.id });
         return { message: 'Usuário registrado com sucesso', user: newUser, token };
     }
     async login(loginDTO) {
@@ -43,8 +38,11 @@ let UsuarioController = class UsuarioController {
         if (!user) {
             throw new common_1.UnauthorizedException('Usuário não cadastrado');
         }
-        const token = this.jwtService.sign({ userId: user.password });
+        const token = this.jwtService.sign({ userId: user.id });
         return { token };
+    }
+    async findAllUsers() {
+        return this.usuarioService.findAllUsers();
     }
 };
 exports.UsuarioController = UsuarioController;
@@ -63,10 +61,15 @@ __decorate([
     __metadata("design:paramtypes", [login_dto_1.LoginDTO]),
     __metadata("design:returntype", Promise)
 ], UsuarioController.prototype, "login", null);
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], UsuarioController.prototype, "findAllUsers", null);
 exports.UsuarioController = UsuarioController = __decorate([
     (0, common_1.Controller)('/usuarios'),
-    __metadata("design:paramtypes", [auth_service_1.AuthService,
-        usuario_service_1.UsuarioService,
+    __metadata("design:paramtypes", [usuario_service_1.UsuarioService,
         jwt_1.JwtService])
 ], UsuarioController);
 //# sourceMappingURL=usuario.controller.js.map

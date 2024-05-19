@@ -5,6 +5,7 @@ export declare class UsuarioService {
     private usuarioRepository;
     constructor(usuarioRepository: UsuarioRepository);
     register(registerDTO: RegisterDTO): Promise<UsuarioEntity>;
+    findAllUsers(): Promise<UsuarioEntity[]>;
     validateUser(email: string, password: string): Promise<UsuarioEntity | null>;
     findOneByEmail(email: string): Promise<UsuarioEntity | undefined>;
 }

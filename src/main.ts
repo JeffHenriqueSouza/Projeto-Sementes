@@ -6,7 +6,6 @@ async function bootstrap() {
   dotenv.config();
   const app = await NestFactory.create(AppModule);
   
-  // Habilitando CORS com as configurações especificadas
   app.enableCors({
     origin: true,
     methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH'],
