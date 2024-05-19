@@ -20,6 +20,10 @@ export class UsuarioService {
     return this.usuarioRepository.save(newUser);
   }
 
+  async findAllUsers(): Promise<UsuarioEntity[]> {
+    return this.usuarioRepository.findAllUsers();
+  }
+
   async validateUser(email: string, password: string): Promise<UsuarioEntity | null> {
     const user = await this.usuarioRepository.findOneByEmail(email);
 

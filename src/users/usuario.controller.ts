@@ -1,12 +1,14 @@
-import { Body, Controller, Post, UsePipes, ValidationPipe, UnauthorizedException } from '@nestjs/common';
+import { Body, Controller, Post, UsePipes, ValidationPipe, UnauthorizedException,Get } from '@nestjs/common';
 import { UsuarioService } from './usuario.service';
 import { RegisterDTO } from './dto/register.dto';
 import { LoginDTO } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
+import { UsuarioEntity } from './entity/usuario.entity';
 
 @Controller('/usuarios')
 export class UsuarioController {
   constructor(
+    
     private usuarioService: UsuarioService,
     private jwtService: JwtService,
   ) {}
@@ -36,5 +38,10 @@ export class UsuarioController {
 
     const token = this.jwtService.sign({ userId: user.id });
     return { token };
+  }
+  
+  @Get()
+  async findAllUsers(): Promise<UsuarioEntity[]> {
+    return this.usuarioService.findAllUsers();
   }
 }
