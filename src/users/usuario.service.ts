@@ -13,24 +13,24 @@ export class UsuarioService {
     const newUser = new UsuarioEntity();
     newUser.nome = registerDTO.nome;
     newUser.email = registerDTO.email;
-    newUser.senha = await bcrypt.hash(registerDTO.senha, 10); // Criptografar a senha antes de salvar
+    newUser.token = await bcrypt.hash(registerDTO.senha, 10); // Salva o token (não a senha) criptografado
     newUser.cargo = registerDTO.cargo;
 
-    return this.usuarioRepository.save(newUser);
+    return this.usuarioRepository.salvar(newUser);
   }
   
-  async validateUser(email: string, password: string): Promise<UsuarioEntity | null> {
+  async validateUser(email: string, token: string): Promise<UsuarioEntity | null> {
     const user = await this.usuarioRepository.findOneByEmail(email);
 
     if (!user) {
       return null; // Usuário não encontrado
     }
 
-    // Verifica se a senha fornecida corresponde à senha armazenada no banco de dados
-    const senhaValida = await bcrypt.compare(password, user.senha);
+    // Verifica se o token fornecido corresponde ao token armazenado no banco de dados
+    const tokenValido = await bcrypt.compare(token, user.token);
 
-    if (!senhaValida) {
-      return null; // Senha inválida
+    if (!tokenValido) {
+      return null; // Token inválido
     }
 
     return user; // Credenciais válidas, retorna o usuário

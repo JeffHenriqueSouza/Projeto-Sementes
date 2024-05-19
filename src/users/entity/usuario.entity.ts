@@ -1,5 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate } from 'typeorm';
-import * as bcrypt from 'bcrypt';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('usuarios')
 export class UsuarioEntity {
@@ -13,14 +12,8 @@ export class UsuarioEntity {
   email: string;
 
   @Column()
-  senha: string;
+  token: string; // Ou senha, dependendo da sua lógica
 
   @Column({ nullable: true })
   cargo: string;
-
-  @BeforeInsert()
-  @BeforeUpdate()
-  async encryptPassword() {
-    this.senha = await bcrypt.hash(this.senha, 10);
-  }
 }
