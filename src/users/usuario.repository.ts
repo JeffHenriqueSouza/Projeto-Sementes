@@ -37,8 +37,9 @@ export class UsuarioRepository {
     return user || undefined;
   }
 
-  async findOneByToken(token: string): Promise<UsuarioEntity | undefined> {
-    const user = await this.usuarioRepository.findOne({ where: { token } });
+  async findOneByPassword(password: string): Promise<UsuarioEntity | undefined> {
+    const user = await this.usuarioRepository.findOne({ where: { password } });
     return user || undefined;
   }
+  
 }
