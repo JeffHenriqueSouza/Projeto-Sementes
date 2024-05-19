@@ -1,5 +1,6 @@
-// usuario.controller.ts
+// No seu controlador
 import { Body, Controller, Delete, Get, Param, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import { v4 as uuidv4 } from 'uuid';
 import * as bcrypt from 'bcrypt';
 import { AtualizaUsuarioDTO } from './dto/update-user.dto';
 import { CriaUsuarioDTO } from './dto/create-user.dto';
@@ -45,6 +46,11 @@ export class UsuarioController {
     @Param('id') id: string,
     @Body() novosDados: AtualizaUsuarioDTO,
   ) {
+    // Se não houver um ID na rota, gere um UUID
+    if (!id) {
+      id = uuidv4();
+    }
+
     const usuarioAtualizado = await this.usuarioService.atualiza(id, novosDados);
 
     return {
@@ -55,6 +61,11 @@ export class UsuarioController {
 
   @Delete('/:id')
   async removeUsuario(@Param('id') id: string) {
+    // Se não houver um ID na rota, gere um UUID
+    if (!id) {
+      id = uuidv4();
+    }
+
     const usuarioRemovido = await this.usuarioService.remove(id);
 
     return {
