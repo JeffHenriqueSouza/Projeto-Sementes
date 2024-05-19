@@ -26,7 +26,7 @@ export class UsuarioController {
   @Post('/login')
   @UsePipes(new ValidationPipe())
   async login(@Body() loginDTO: LoginDTO) {
-    const user = await this.authService.validateUser(loginDTO.username, loginDTO.password);
+    const user = await this.authService.validateUser(loginDTO.email, loginDTO.password);
     if (!user) {
       return { message: 'Invalid credentials' };
     }

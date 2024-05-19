@@ -16,9 +16,9 @@ export class UsuarioService {
     return this.usuarioRepository.findOne({ where: { email } });
   }
 
-  async validateUser(email: string, senha: string): Promise<UsuarioEntity | null> {
+  async validateUser(email: string, password: string): Promise<UsuarioEntity | null> {
     const user = await this.findOneByEmail(email);
-    if (user && await bcrypt.compare(senha, user.senha)) {
+    if (user && await bcrypt.compare(password, user.senha)) {
       const { senha, ...result } = user;
       return result as UsuarioEntity;
     }
