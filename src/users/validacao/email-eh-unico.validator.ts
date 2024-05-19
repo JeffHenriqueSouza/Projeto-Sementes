@@ -1,18 +1,19 @@
+// email-eh-unico.validator.ts
 import { Injectable } from '@nestjs/common';
-import { UsuarioRepository } from '../usuario.repository';
-import { ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
+import { ValidatorConstraintInterface, ValidationArguments, ValidatorConstraint } from 'class-validator';
+import { UsuarioRepository } from '../usuario.repository'; // Corrija o caminho do import
 
 @Injectable()
-@ValidatorConstraint({ name: 'emailUnico', async: true })
-export class EmailEhUnicoValidator implements ValidatorConstraintInterface {
-  constructor(private usuarioRepository: UsuarioRepository) {}
+@ValidatorConstraint({ async: true })
+export class EmailUnicoValidator implements ValidatorConstraintInterface {
+  constructor(private usuarioRepository: UsuarioRepository) {} // Adicione o parâmetro ao construtor
 
-  async validate(email: string) {
-    const usuario = await this.usuarioRepository.existeComEmail(email);
+  async validate(email: any, args: ValidationArguments) {
+    const usuario = await this.usuarioRepository.findOneByEmail(email);
     return !usuario;
   }
 
-  defaultMessage() {
-    return 'O email já está em uso';
+  defaultMessage(args: ValidationArguments) {
+    return 'O e-mail $value já está sendo usado por outra conta';
   }
 }

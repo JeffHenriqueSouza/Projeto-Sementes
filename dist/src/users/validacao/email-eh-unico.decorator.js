@@ -9,34 +9,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EmailEhUnico = exports.EmailEhUnicoConstraint = void 0;
+exports.IsEmailUnico = exports.EmailUnicoConstraint = void 0;
 const class_validator_1 = require("class-validator");
 const usuario_repository_1 = require("../usuario.repository");
-let EmailEhUnicoConstraint = class EmailEhUnicoConstraint {
+let EmailUnicoConstraint = class EmailUnicoConstraint {
     constructor(usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
     async validate(email) {
-        const usuario = await this.usuarioRepository.existeComEmail(email);
+        const usuario = await this.usuarioRepository.findOneByEmail(email);
         return !usuario;
     }
 };
-exports.EmailEhUnicoConstraint = EmailEhUnicoConstraint;
-exports.EmailEhUnicoConstraint = EmailEhUnicoConstraint = __decorate([
+exports.EmailUnicoConstraint = EmailUnicoConstraint;
+exports.EmailUnicoConstraint = EmailUnicoConstraint = __decorate([
     (0, class_validator_1.ValidatorConstraint)({ async: true }),
     __metadata("design:paramtypes", [usuario_repository_1.UsuarioRepository])
-], EmailEhUnicoConstraint);
-function EmailEhUnico(validationOptions) {
+], EmailUnicoConstraint);
+function IsEmailUnico(validationOptions) {
     return function (object, propertyName) {
         (0, class_validator_1.registerDecorator)({
-            name: 'emailEhUnico',
             target: object.constructor,
             propertyName: propertyName,
             options: validationOptions,
             constraints: [],
-            validator: EmailEhUnicoConstraint,
+            validator: EmailUnicoConstraint,
         });
     };
 }
-exports.EmailEhUnico = EmailEhUnico;
+exports.IsEmailUnico = IsEmailUnico;
 //# sourceMappingURL=email-eh-unico.decorator.js.map

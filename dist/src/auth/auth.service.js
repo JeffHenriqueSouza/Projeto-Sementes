@@ -11,13 +11,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
+const usuario_service_1 = require("../users/usuario.service");
 const jwt_1 = require("@nestjs/jwt");
 let AuthService = class AuthService {
-    constructor(jwtService) {
+    constructor(usuarioService, jwtService) {
+        this.usuarioService = usuarioService;
         this.jwtService = jwtService;
     }
     async login(user) {
-        const payload = { username: user.nome, sub: user.id };
+        const payload = { username: user.email, sub: user.id };
         return {
             access_token: this.jwtService.sign(payload),
         };
@@ -26,6 +28,7 @@ let AuthService = class AuthService {
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [jwt_1.JwtService])
+    __metadata("design:paramtypes", [usuario_service_1.UsuarioService,
+        jwt_1.JwtService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

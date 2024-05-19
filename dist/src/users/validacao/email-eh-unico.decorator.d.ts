@@ -1,8 +1,8 @@
 import { ValidationOptions, ValidatorConstraintInterface } from 'class-validator';
 import { UsuarioRepository } from '../usuario.repository';
-export declare class EmailEhUnicoConstraint implements ValidatorConstraintInterface {
-    private readonly usuarioRepository;
+export declare class EmailUnicoConstraint implements ValidatorConstraintInterface {
+    private usuarioRepository;
     constructor(usuarioRepository: UsuarioRepository);
     validate(email: string): Promise<boolean>;
 }
-export declare function EmailEhUnico(validationOptions?: ValidationOptions): (object: Object, propertyName: string) => void;
+export declare function IsEmailUnico(validationOptions?: ValidationOptions): (object: any, propertyName: string) => void;

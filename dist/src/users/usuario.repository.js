@@ -21,57 +21,13 @@ let UsuarioRepository = class UsuarioRepository {
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
-    async salvar(usuario) {
-        const objeto = this.userRepository.create(usuario);
-        return await this.userRepository.save(objeto);
-    }
-    async listar() {
-        return await this.userRepository.find();
-    }
-    async existeComEmail(email) {
-        const possivelUsuario = await this.userRepository.findOne({ where: { email } });
-        return !!possivelUsuario;
-    }
-    async buscaPorId(id) {
-        const usuario = await this.userRepository.findOne({ where: { id } });
-        if (!usuario) {
-            throw new Error('Usuário não encontrado');
-        }
-        return usuario;
-    }
-    async atualiza(id, dadosDeAtualizacao) {
-        if (!id) {
-            console.error("ID está vazio ou nulo");
-            throw new Error('ID está vazio ou nulo');
-        }
-        await this.userRepository.update(id, dadosDeAtualizacao);
-        return await this.buscaPorId(id);
-    }
-    async remove(id) {
-        if (!id) {
-            console.error("ID está vazio ou nulo");
-            throw new Error('ID está vazio ou nulo');
-        }
-        const usuarioRemovido = await this.buscaPorId(id);
-        await this.userRepository.delete(id);
-        return usuarioRemovido;
-    }
-    async buscarPorNome(nome) {
-        return await this.userRepository.find({ where: { nome: (0, typeorm_2.Like)(`%${nome}%`) } });
-    }
-    async buscarPorCargo(cargo) {
-        return await this.userRepository.find({ where: { cargo: (0, typeorm_2.Like)(`%${cargo}%`) } });
-    }
-    async buscarPorNomeECargo(nome, cargo) {
-        return await this.userRepository.find({ where: { nome, cargo } });
-    }
-    async findOneByUsername(username) {
-        const user = await this.userRepository.findOne({ where: { nome: username } });
-        return user || undefined;
+    async save(registerDTO) {
+        const newUser = this.userRepository.create(registerDTO);
+        return this.userRepository.save(newUser);
     }
     async findOneByEmail(email) {
-        const user = await this.userRepository.findOne({ where: { email } });
-        return user || undefined;
+        const usuario = await this.userRepository.findOne({ where: { email } });
+        return usuario || undefined;
     }
 };
 exports.UsuarioRepository = UsuarioRepository;

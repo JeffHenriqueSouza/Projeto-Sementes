@@ -9,26 +9,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EmailEhUnicoValidator = void 0;
+exports.EmailUnicoValidator = void 0;
 const common_1 = require("@nestjs/common");
-const usuario_repository_1 = require("../usuario.repository");
 const class_validator_1 = require("class-validator");
-let EmailEhUnicoValidator = class EmailEhUnicoValidator {
+const usuario_repository_1 = require("../usuario.repository");
+let EmailUnicoValidator = class EmailUnicoValidator {
     constructor(usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
-    async validate(email) {
-        const usuario = await this.usuarioRepository.existeComEmail(email);
+    async validate(email, args) {
+        const usuario = await this.usuarioRepository.findOneByEmail(email);
         return !usuario;
     }
-    defaultMessage() {
-        return 'O email já está em uso';
+    defaultMessage(args) {
+        return 'O e-mail $value já está sendo usado por outra conta';
     }
 };
-exports.EmailEhUnicoValidator = EmailEhUnicoValidator;
-exports.EmailEhUnicoValidator = EmailEhUnicoValidator = __decorate([
+exports.EmailUnicoValidator = EmailUnicoValidator;
+exports.EmailUnicoValidator = EmailUnicoValidator = __decorate([
     (0, common_1.Injectable)(),
-    (0, class_validator_1.ValidatorConstraint)({ name: 'emailUnico', async: true }),
+    (0, class_validator_1.ValidatorConstraint)({ async: true }),
     __metadata("design:paramtypes", [usuario_repository_1.UsuarioRepository])
-], EmailEhUnicoValidator);
+], EmailUnicoValidator);
 //# sourceMappingURL=email-eh-unico.validator.js.map

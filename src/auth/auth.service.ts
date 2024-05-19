@@ -10,10 +10,6 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async validateUser(email: string, senha: string): Promise<UsuarioEntity | null> {
-    return this.usuarioService.validateUser(email, senha);
-  }
-
   async login(user: UsuarioEntity) {
     const payload = { username: user.email, sub: user.id };
     return {

@@ -1,8 +1,8 @@
+import { ValidatorConstraintInterface, ValidationArguments } from 'class-validator';
 import { UsuarioRepository } from '../usuario.repository';
-import { ValidatorConstraintInterface } from 'class-validator';
-export declare class EmailEhUnicoValidator implements ValidatorConstraintInterface {
+export declare class EmailUnicoValidator implements ValidatorConstraintInterface {
     private usuarioRepository;
     constructor(usuarioRepository: UsuarioRepository);
-    validate(email: string): Promise<boolean>;
-    defaultMessage(): string;
+    validate(email: any, args: ValidationArguments): Promise<boolean>;
+    defaultMessage(args: ValidationArguments): string;
 }
