@@ -1,24 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Like } from 'typeorm';
+import { Repository } from 'typeorm';
 import { UsuarioEntity } from './entity/usuario.entity';
-import { RegisterDTO } from './dto/register.dto';
 
 @Injectable()
 export class UsuarioRepository {
   constructor(
     @InjectRepository(UsuarioEntity)
-    private userRepository: Repository<UsuarioEntity>,
+    private readonly userRepository: Repository<UsuarioEntity>,
   ) {}
 
-  async save(registerDTO: RegisterDTO): Promise<UsuarioEntity> {
-    const newUser = this.userRepository.create(registerDTO);
-    return this.userRepository.save(newUser);
+  async save(usuario: UsuarioEntity): Promise<UsuarioEntity> {
+    return this.userRepository.save(usuario);
   }
 
   async findOneByEmail(email: string): Promise<UsuarioEntity | undefined> {
+    console.log('Buscando usuário por e-mail:', email);
     const usuario = await this.userRepository.findOne({ where: { email } });
+    console.log('Usuário encontrado:', usuario);
     return usuario || undefined;
-}
-
+  }
 }
