@@ -12,7 +12,10 @@ export class UsuarioEntity {
   email: string;
 
   @Column()
-  password: string; // Ou senha, dependendo da sua lógica
+  senha: string; // Senha criptografada
+
+  @Column()
+  token: string; // Token gerado a partir da senha
 
   @Column({ nullable: true })
   cargo: string;
