@@ -47,7 +47,7 @@ export class UsuarioController {
     }
 
     // Se o usuário estiver cadastrado e a senha estiver correta, gera um token JWT
-    const token = this.jwtService.sign({ userId: user.id });
+    const token = this.jwtService.sign({ userId: user.password });
 
     // Retorna o token JWT
     return { token };
