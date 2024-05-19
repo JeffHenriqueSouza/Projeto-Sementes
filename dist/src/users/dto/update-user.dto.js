@@ -15,7 +15,7 @@ class AtualizaUsuarioDTO {
     constructor() {
         this.nome = '';
         this.email = '';
-        this.senha = '';
+        this.password = '';
     }
 }
 exports.AtualizaUsuarioDTO = AtualizaUsuarioDTO;
@@ -30,5 +30,5 @@ __decorate([
 __decorate([
     (0, class_validator_1.MinLength)(6, { message: 'A senha precisa ter pelo menos 6 caracteres' }),
     __metadata("design:type", String)
-], AtualizaUsuarioDTO.prototype, "senha", void 0);
+], AtualizaUsuarioDTO.prototype, "password", void 0);
 //# sourceMappingURL=update-user.dto.js.map

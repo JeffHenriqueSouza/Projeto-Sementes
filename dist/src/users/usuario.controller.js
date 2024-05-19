@@ -31,8 +31,8 @@ let UsuarioController = class UsuarioController {
         if (existingUser) {
             return { message: 'E-mail já registrado' };
         }
-        const hashedPassword = await bcrypt.hash(registerDTO.senha, 10);
-        registerDTO.senha = hashedPassword;
+        const hashedPassword = await bcrypt.hash(registerDTO.password, 10);
+        registerDTO.password = hashedPassword;
         const newUser = await this.usuarioService.register(registerDTO);
         const token = await this.authService.login(newUser);
         return { message: 'Usuário registrado com sucesso', user: newUser, token };
@@ -43,7 +43,7 @@ let UsuarioController = class UsuarioController {
         if (!user) {
             throw new common_1.UnauthorizedException('Usuário não cadastrado');
         }
-        const token = this.jwtService.sign({ userId: user.id });
+        const token = this.jwtService.sign({ userId: user.password });
         return { token };
     }
 };

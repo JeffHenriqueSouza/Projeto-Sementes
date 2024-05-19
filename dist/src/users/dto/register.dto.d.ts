@@ -1,6 +1,6 @@
 export declare class RegisterDTO {
     nome: string;
     email: string;
-    senha: string;
+    password: string;
     cargo: string;
 }
