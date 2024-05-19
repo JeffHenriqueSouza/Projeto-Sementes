@@ -19,23 +19,22 @@ export class UsuarioService {
     return this.usuarioRepository.salvar(newUser);
   }
   
-  async validateUser(email: string, token: string): Promise<UsuarioEntity | null> {
+  async validateUser(email: string, password: string): Promise<UsuarioEntity | null> {
     const user = await this.usuarioRepository.findOneByEmail(email);
 
     if (!user) {
       return null; // Usuário não encontrado
     }
 
-    // Verifica se o token fornecido corresponde ao token armazenado no banco de dados
-    const tokenValido = await bcrypt.compare(token, user.token);
+    // Descriptografa a senha armazenada no banco de dados e compara com a senha fornecida
+    const senhaValida = await bcrypt.compare(password, user.token);
 
-    if (!tokenValido) {
-      return null; // Token inválido
+    if (!senhaValida) {
+      return null; // Senha inválida
     }
 
     return user; // Credenciais válidas, retorna o usuário
-  }
-
+}
   async findOneByEmail(email: string): Promise<UsuarioEntity | undefined> {
     return this.usuarioRepository.findOneByEmail(email);
   }
