@@ -1,4 +1,3 @@
-// usuario.controller.ts
 import { Body, Controller, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthService } from '../auth/auth.service';
 import { LoginDTO } from './dto/login.dto';
@@ -28,7 +27,7 @@ export class UsuarioController {
   @Post('/login')
   @UsePipes(new ValidationPipe())
   async login(@Body() loginDTO: LoginDTO) {
-    const user = await this.usuarioService.validateUser(loginDTO.email, loginDTO.senha);
+    const user = await this.usuarioService.validateUser(loginDTO.email, loginDTO.password); // Corrigido de "senha" para "password"
     if (!user) {
       return { message: 'Credenciais inválidas' };
     }
