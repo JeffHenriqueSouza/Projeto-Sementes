@@ -28,7 +28,7 @@ export class UsuarioController {
   @Post('/login')
   @UsePipes(new ValidationPipe())
   async login(@Body() loginDTO: LoginDTO) {
-    const user = await this.usuarioService.validateUser(loginDTO.email, loginDTO.password);
+    const user = await this.usuarioService.validateUser(loginDTO.email, loginDTO.senha);
     if (!user) {
       return { message: 'Credenciais inválidas' };
     }
