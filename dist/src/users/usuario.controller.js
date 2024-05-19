@@ -18,27 +18,33 @@ const auth_service_1 = require("../auth/auth.service");
 const login_dto_1 = require("./dto/login.dto");
 const register_dto_1 = require("./dto/register.dto");
 const usuario_service_1 = require("./usuario.service");
+const bcrypt = require("bcrypt");
+const jwt_1 = require("@nestjs/jwt");
 let UsuarioController = class UsuarioController {
-    constructor(authService, usuarioService) {
+    constructor(authService, usuarioService, jwtService) {
         this.authService = authService;
         this.usuarioService = usuarioService;
+        this.jwtService = jwtService;
     }
     async register(registerDTO) {
         const existingUser = await this.usuarioService.findOneByEmail(registerDTO.email);
         if (existingUser) {
             return { message: 'E-mail já registrado' };
         }
+        const hashedPassword = await bcrypt.hash(registerDTO.senha, 10);
+        registerDTO.senha = hashedPassword;
         const newUser = await this.usuarioService.register(registerDTO);
         const token = await this.authService.login(newUser);
         return { message: 'Usuário registrado com sucesso', user: newUser, token };
     }
     async login(loginDTO) {
-        const user = await this.usuarioService.validateUser(loginDTO.email, loginDTO.password);
+        const { email, password } = loginDTO;
+        const user = await this.usuarioService.validateUser(email, password);
         if (!user) {
-            return { message: 'Credenciais inválidas' };
+            throw new common_1.UnauthorizedException('Usuário não cadastrado');
         }
-        const token = await this.authService.login(user);
-        return { message: 'Login bem-sucedido', user, token };
+        const token = this.jwtService.sign({ userId: user.id });
+        return { token };
     }
 };
 exports.UsuarioController = UsuarioController;
@@ -51,8 +57,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsuarioController.prototype, "register", null);
 __decorate([
-    (0, common_1.Post)('/login'),
-    (0, common_1.UsePipes)(new common_1.ValidationPipe()),
+    (0, common_1.Post)('login'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [login_dto_1.LoginDTO]),
@@ -61,6 +66,7 @@ __decorate([
 exports.UsuarioController = UsuarioController = __decorate([
     (0, common_1.Controller)('/usuarios'),
     __metadata("design:paramtypes", [auth_service_1.AuthService,
-        usuario_service_1.UsuarioService])
+        usuario_service_1.UsuarioService,
+        jwt_1.JwtService])
 ], UsuarioController);
 //# sourceMappingURL=usuario.controller.js.map

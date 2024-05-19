@@ -11,25 +11,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsuarioService = void 0;
 const common_1 = require("@nestjs/common");
-const usuario_entity_1 = require("./entity/usuario.entity");
 const usuario_repository_1 = require("./usuario.repository");
+const bcrypt = require("bcrypt");
 let UsuarioService = class UsuarioService {
     constructor(usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
     async register(registerDTO) {
-        const newUser = new usuario_entity_1.UsuarioEntity();
-        newUser.nome = registerDTO.nome;
-        newUser.email = registerDTO.email;
-        newUser.senha = registerDTO.senha;
-        newUser.cargo = registerDTO.cargo;
-        return this.usuarioRepository.save(newUser);
+        const { nome, email, senha, cargo } = registerDTO;
+        const newUser = await this.usuarioRepository.save({
+            nome,
+            email,
+            senha: await bcrypt.hash(senha, 10),
+            cargo,
+        });
+        return newUser;
     }
     async validateUser(email, password) {
-        return null;
+        const user = await this.usuarioRepository.findOneByEmail(email);
+        if (!user) {
+            return null;
+        }
+        const senhaValida = await bcrypt.compare(password, user.password);
+        if (!senhaValida) {
+            return null;
+        }
+        return user;
     }
     async findOneByEmail(email) {
-        return undefined;
+        return this.usuarioRepository.findOneByEmail(email);
     }
 };
 exports.UsuarioService = UsuarioService;
