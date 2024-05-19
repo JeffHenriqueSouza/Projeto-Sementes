@@ -40,10 +40,18 @@ let UsuarioRepository = class UsuarioRepository {
         return usuario;
     }
     async atualiza(id, dadosDeAtualizacao) {
+        if (!id) {
+            console.error("ID está vazio ou nulo");
+            throw new Error('ID está vazio ou nulo');
+        }
         await this.userRepository.update(id, dadosDeAtualizacao);
         return await this.buscaPorId(id);
     }
     async remove(id) {
+        if (!id) {
+            console.error("ID está vazio ou nulo");
+            throw new Error('ID está vazio ou nulo');
+        }
         const usuarioRemovido = await this.buscaPorId(id);
         await this.userRepository.delete(id);
         return usuarioRemovido;
