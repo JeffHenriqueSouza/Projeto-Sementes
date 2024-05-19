@@ -14,8 +14,8 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsuarioController = void 0;
 const common_1 = require("@nestjs/common");
-const uuid_1 = require("uuid");
 const bcrypt = require("bcrypt");
+const uuid_1 = require("uuid");
 const update_user_dto_1 = require("./dto/update-user.dto");
 const create_user_dto_1 = require("./dto/create-user.dto");
 const ListaUsuario_dto_1 = require("./dto/ListaUsuario.dto");
@@ -30,15 +30,16 @@ let UsuarioController = class UsuarioController {
         this.authService = authService;
     }
     async criaUsuario(dadosDoUsuario) {
+        const id = (0, uuid_1.v4)();
         const usuarioEntity = new usuario_entity_1.UsuarioEntity();
         usuarioEntity.email = dadosDoUsuario.email;
         usuarioEntity.senha = await bcrypt.hash(dadosDoUsuario.senha, 10);
         usuarioEntity.nome = dadosDoUsuario.nome;
-        usuarioEntity.id = (0, uuid_1.v4)();
+        usuarioEntity.id = id;
         usuarioEntity.cargo = dadosDoUsuario.cargo;
-        await this.usuarioService.salvar(usuarioEntity);
+        const newUser = await this.usuarioService.salvar(usuarioEntity);
         return {
-            usuario: new ListaUsuario_dto_1.ListaUsuarioDTO(usuarioEntity.id, usuarioEntity.nome),
+            usuario: new ListaUsuario_dto_1.ListaUsuarioDTO(newUser.id, newUser.nome),
             mensagem: 'usuário criado com sucesso',
         };
     }

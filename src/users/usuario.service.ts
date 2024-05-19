@@ -1,82 +1,37 @@
 import { Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { UsuarioEntity } from './entity/usuario.entity';
-import { UsuarioRepository } from './usuario.repository';
+import * as bcrypt from 'bcrypt';
 import { RegisterDTO } from './dto/register.dto';
 
 @Injectable()
 export class UsuarioService {
   constructor(
-    private usuarioRepository: UsuarioRepository,
-    private jwtService: JwtService
+    @InjectRepository(UsuarioEntity)
+    private readonly usuarioRepository: Repository<UsuarioEntity>,
   ) {}
 
-  async salvar(usuario: UsuarioEntity) {
-    return await this.usuarioRepository.salvar(usuario);
+  async findOneByEmail(email: string): Promise<UsuarioEntity | null> {
+    return this.usuarioRepository.findOne({ where: { email } });
   }
 
-  async listar() {
-    return await this.usuarioRepository.listar();
-  }
-
-  async atualiza(id: string, dadosDeAtualizacao: Partial<UsuarioEntity>) {
-    // Verifica se o ID está vazio ou nulo
-    if (!id) {
-      console.error("ID está vazio ou nulo");
-      // Adicione tratamento de erro ou retorno apropriado aqui
-      throw new Error('ID está vazio ou nulo');
-    }
-
-    return await this.usuarioRepository.atualiza(id, dadosDeAtualizacao);
-  }
-
-  async remove(id: string) {
-    if (!id) {
-      console.error("ID está vazio ou nulo");
-      throw new Error('ID está vazio ou nulo');
-    }
-
-    return await this.usuarioRepository.remove(id);
-  }
-
-  async buscarPorNomeECargo(nome: string, cargo: string) {
-    return await this.usuarioRepository.buscarPorNomeECargo(nome, cargo);
-  }
-
-  async findOneByUsername(username: string): Promise<UsuarioEntity | undefined> {
-    return await this.usuarioRepository.findOneByUsername(username);
-  }
-
-  async findOneByEmail(email: string): Promise<UsuarioEntity | undefined> {
-    return await this.usuarioRepository.findOneByEmail(email);
-  }
-
-  async register(registerDTO: RegisterDTO): Promise<UsuarioEntity> {
-    const hashedPassword = await bcrypt.hash(registerDTO.senha, 10);
-
-    const newUser = new UsuarioEntity();
-    newUser.nome = registerDTO.nome;
-    newUser.email = registerDTO.email;
-    newUser.senha = hashedPassword;
-    newUser.cargo = registerDTO.cargo;
-
-    return await this.usuarioRepository.salvar(newUser);
-  }
-
-  async validateUser(username: string, pass: string): Promise<any> {
-    const user = await this.findOneByUsername(username);
-    if (user && await bcrypt.compare(pass, user.senha)) {
+  async validateUser(email: string, senha: string): Promise<UsuarioEntity | null> {
+    const user = await this.findOneByEmail(email);
+    if (user && await bcrypt.compare(senha, user.senha)) {
       const { senha, ...result } = user;
-      return result;
+      return result as UsuarioEntity;
     }
     return null;
   }
 
-  async login(user: any) {
-    const payload = { username: user.nome, sub: user.id };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+  async register(registerDTO: RegisterDTO): Promise<UsuarioEntity> {
+    const usuarioEntity = new UsuarioEntity();
+    usuarioEntity.email = registerDTO.email;
+    usuarioEntity.senha = await bcrypt.hash(registerDTO.senha, 10);
+    usuarioEntity.nome = registerDTO.nome;
+    usuarioEntity.cargo = registerDTO.cargo;
+
+    return this.usuarioRepository.save(usuarioEntity);
   }
 }

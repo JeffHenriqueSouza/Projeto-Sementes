@@ -13,12 +13,6 @@ exports.UsuarioEntity = void 0;
 const typeorm_1 = require("typeorm");
 const bcrypt = require("bcrypt");
 let UsuarioEntity = class UsuarioEntity {
-    constructor() {
-        this.id = '';
-        this.nome = '';
-        this.email = '';
-        this.senha = '';
-    }
     async encryptPassword() {
         this.senha = await bcrypt.hash(this.senha, 10);
     }
