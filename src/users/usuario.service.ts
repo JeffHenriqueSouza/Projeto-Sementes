@@ -1,4 +1,3 @@
-// usuario.service.ts
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsuarioEntity } from './entity/usuario.entity';
 import { UsuarioRepository } from './usuario.repository';
@@ -11,22 +10,33 @@ export class UsuarioService {
   constructor(private usuarioRepository: UsuarioRepository) {}
 
   async register(registerDTO: RegisterDTO): Promise<UsuarioEntity> {
-    const newUser = new UsuarioEntity(); // Criar nova instância de UsuarioEntity
+    const newUser = new UsuarioEntity();
     newUser.nome = registerDTO.nome;
     newUser.email = registerDTO.email;
-    newUser.senha = registerDTO.senha;
+    newUser.senha = await bcrypt.hash(registerDTO.senha, 10); // Criptografar a senha antes de salvar
     newUser.cargo = registerDTO.cargo;
 
-    return this.usuarioRepository.save(newUser); // Retornar o novo usuário salvo
+    return this.usuarioRepository.save(newUser);
   }
-
+  
   async validateUser(email: string, password: string): Promise<UsuarioEntity | null> {
-    // Implementação da validação do usuário
-    return null; // Placeholder para evitar erro, substitua pelo código real
+    const user = await this.usuarioRepository.findOneByEmail(email);
+
+    if (!user) {
+      return null; // Usuário não encontrado
+    }
+
+    // Verifica se a senha fornecida corresponde à senha armazenada no banco de dados
+    const senhaValida = await bcrypt.compare(password, user.senha);
+
+    if (!senhaValida) {
+      return null; // Senha inválida
+    }
+
+    return user; // Credenciais válidas, retorna o usuário
   }
 
   async findOneByEmail(email: string): Promise<UsuarioEntity | undefined> {
-    // Implementação para encontrar um usuário pelo email
-    return undefined; // Placeholder para evitar erro, substitua pelo código real
+    return this.usuarioRepository.findOneByEmail(email);
   }
 }
