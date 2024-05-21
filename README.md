@@ -218,7 +218,7 @@ A arquitetura do sistema é baseada em módulos do NestJS, cada um responsável 
   - Retorno:
     ```
     [
-     Seu desempenho ainda é insatisfatório em algumas áreas. Recomendamos focar em melhorar suas habilidades em todas as áreas.
+     Parabéns pelo excelente desempenho em todas as habilidades! Continue mantendo o alto padrão de qualidade e inspire outros a fazer o mesmo.
     ]
     ```
 
