@@ -256,63 +256,7 @@ Este projeto utiliza GitHub Actions para CI/CD. O pipeline está configurado par
 
 ### Configuração do Pipeline
 
-O pipeline está definido no arquivo `.github/workflows/ci-cd.yml`.
-
-### Segredos Necessários
-
-Você precisa adicionar os seguintes segredos no GitHub:
-
-- `RENDER_SERVICE_ID`: ID do serviço Render.
-- `RENDER_API_KEY`: Chave API do Render.
-- name: CI/CD Pipeline
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run tests
-        run: npm test
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Deploy to Render
-        env:
-          RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
-          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
-        run: |
-          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys" \
-          -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-          -H "Content-Type: application/json" \
-          -d '{}'
-
-
-
-
+O pipeline está definido no arquivo [`.github/workflows/ci-cd.yml`.](https://github.com/JeffHenriqueSouza/Projeto-Sementes/tree/main/.github/workflows)
 
 ## Diagrama de Tabelas
 ```plaintext
