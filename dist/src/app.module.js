@@ -21,9 +21,7 @@ exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            config_1.ConfigModule.forRoot({
-                envFilePath: ['.env'],
-            }),
+            config_1.ConfigModule.forRoot(),
             usuario_module_1.UsuarioModule,
             database_module_1.DatabaseModule,
             avaliacao_module_1.AvaliacaoModule,
