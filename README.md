@@ -138,6 +138,96 @@ A arquitetura do sistema é baseada em módulos do NestJS, cada um responsável 
 
 ### Avaliações
 - **POST /avaliacoes/criar**: Cria uma nova avaliação.
+  - Body:
+    ```json
+    {
+      "usuarioAvaliadoId": "uuid",
+      "comunicacao": 5,
+      "proatividade": 4,
+      "inteligenciaEmocional": 3,
+      "flexibilidade": 5,
+      "criatividade": 4,
+      "observacao": 3,
+      "comentario": "Excelente desempenho"
+    }
+    ```
+  - Retorno:
+    ```json
+    {
+      "id": "uuid",
+      "usuarioAvaliadoId": "uuid",
+      "comunicacao": 5,
+      "proatividade": 4,
+      "inteligenciaEmocional": 3,
+      "flexibilidade": 5,
+      "criatividade": 4,
+      "observacao": 3,
+      "comentario": "Excelente desempenho"
+    }
+    ```
+
+- **GET /avaliacoes**: Lista todas as avaliações.
+  - Retorno:
+    ```json
+    [
+      {
+        "id": "uuid",
+        "usuarioAvaliadoId": "uuid",
+        "comunicacao": 5,
+        "proatividade": 4,
+        "inteligenciaEmocional": 3,
+        "flexibilidade": 5,
+        "criatividade": 4,
+        "observacao": 3,
+        "comentario": "Excelente desempenho"
+      }
+    ]
+    ```
+
+### Feedbacks
+- **POST /feedbacks**: Cria um novo feedback.
+  - Body:
+    ```json
+    {
+      "userId": "uuid",
+      "message": "Ótimo trabalho!"
+    }
+    ```
+  - Retorno:
+    ```json
+    {
+      "id": "uuid",
+      "userId": "uuid",
+      "message": "Ótimo trabalho!"
+    }
+    ```
+
+- **GET /feedbacks**: Lista todos os feedbacks.
+  - Retorno:
+    ```json
+    [
+      {
+        "id": "uuid",
+        "userId": "uuid",
+        "message": "Ótimo trabalho!"
+      }
+    ]
+    ```
+
+- **GET /feedbacks/user/:userId**: Busca feedbacks para um usuário específico.
+  - Retorno:
+    ```json
+    [
+      {
+        "id": "uuid",
+        "userId": "uuid",
+        "message": "Ótimo trabalho!"
+      }
+    ]
+    ```
+
+### Avaliações
+- **POST /avaliacoes/criar**: Cria uma nova avaliação.
 - **GET /avaliacoes**: Lista todas as avaliações.
 - **GET /avaliacoes/:id**: Busca uma avaliação por ID.
 - **PUT /avaliacoes/:id**: Atualiza uma avaliação por ID.
