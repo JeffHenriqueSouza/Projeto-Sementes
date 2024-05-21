@@ -216,13 +216,9 @@ A arquitetura do sistema é baseada em módulos do NestJS, cada um responsável 
 
 - **GET /feedbacks/user/:userId**: Busca feedbacks para um usuário específico.
   - Retorno:
-    ```json
+    ```
     [
-      {
-        "id": "uuid",
-        "userId": "uuid",
-        "message": "Ótimo trabalho!"
-      }
+     Parabéns pelo excelente desempenho em todas as habilidades! Continue mantendo o alto padrão de qualidade e inspire outros a fazer o mesmo.
     ]
     ```
 
@@ -250,6 +246,17 @@ A arquitetura do sistema é baseada em módulos do NestJS, cada um responsável 
 ### Documentação
 
 A documentação completa do projeto pode ser encontrada neste link = https://github.com/JeffHenriqueSouza/Projeto-Sementes/blob/main/Documenta%C3%A7%C3%A3o-%20Back%20End.docx
+
+## CI/CD Pipeline
+
+Este projeto utiliza GitHub Actions para CI/CD. O pipeline está configurado para:
+
+- Construir e testar o código na branch `main` em cada push ou pull request.
+- Implantar automaticamente a aplicação no Render após um build bem-sucedido.
+
+### Configuração do Pipeline
+
+O pipeline está definido no arquivo [`.github/workflows/ci-cd.yml`.](https://github.com/JeffHenriqueSouza/Projeto-Sementes/tree/main/.github/workflows)
 
 ## Diagrama de Tabelas
 ```plaintext
