@@ -216,13 +216,9 @@ A arquitetura do sistema é baseada em módulos do NestJS, cada um responsável 
 
 - **GET /feedbacks/user/:userId**: Busca feedbacks para um usuário específico.
   - Retorno:
-    ```json
+    ```
     [
-      {
-        "id": "uuid",
-        "userId": "uuid",
-        "message": "Ótimo trabalho!"
-      }
+     Seu desempenho ainda é insatisfatório em algumas áreas. Recomendamos focar em melhorar suas habilidades em todas as áreas.
     ]
     ```
 
