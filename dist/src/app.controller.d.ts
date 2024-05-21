@@ -6,7 +6,6 @@ export declare class AppController {
     private readonly appService;
     private readonly feedbackService;
     constructor(appService: AppService, feedbackService: FeedbacksService);
-    getHello(): string;
     createFeedback(createFeedbackDto: CreateFeedbackDto): Promise<Feedback>;
     getAllFeedbacks(): Promise<Feedback[]>;
 }

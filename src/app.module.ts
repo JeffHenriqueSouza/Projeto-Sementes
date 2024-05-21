@@ -15,7 +15,7 @@ import { FeedbackModule } from './feedback/feedback.module';
     UsuarioModule, 
     DatabaseModule,
     AvaliacaoModule,
-    FeedbackModule, // 
+    FeedbackModule, 
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,4 +1,3 @@
-// usuario.module.ts
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuarioController } from './usuario.controller';
@@ -13,11 +12,11 @@ import { AuthService } from '../auth/auth.service';
   imports: [
     TypeOrmModule.forFeature([UsuarioEntity]), 
     JwtModule.register({
-      secret: 'your_jwt_secret', // Altere para uma chave secreta forte
+      secret: 'your_jwt_secret', 
       signOptions: { expiresIn: '60m' },
     }),
   ],
   controllers: [UsuarioController],
-  providers: [UsuarioService, UsuarioRepository, AuthService], // Adicione o AuthService aos providers
+  providers: [UsuarioService, UsuarioRepository, AuthService], 
 })
 export class UsuarioModule {}

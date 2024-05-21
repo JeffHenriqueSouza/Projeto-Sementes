@@ -1,12 +1,11 @@
-// email-eh-unico.validator.ts
 import { Injectable } from '@nestjs/common';
 import { ValidatorConstraintInterface, ValidationArguments, ValidatorConstraint } from 'class-validator';
-import { UsuarioRepository } from '../usuario.repository'; // Corrija o caminho do import
+import { UsuarioRepository } from '../usuario.repository'; 
 
 @Injectable()
 @ValidatorConstraint({ async: true })
 export class EmailUnicoValidator implements ValidatorConstraintInterface {
-  constructor(private usuarioRepository: UsuarioRepository) {} // Adicione o parâmetro ao construtor
+  constructor(private usuarioRepository: UsuarioRepository) {} 
 
   async validate(email: any, args: ValidationArguments) {
     const usuario = await this.usuarioRepository.findOneByEmail(email);

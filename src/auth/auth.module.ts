@@ -1,4 +1,3 @@
-// auth.module.ts
 import { forwardRef, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
@@ -10,10 +9,10 @@ import { UsuarioModule } from '../users/usuario.module';
   imports: [
     PassportModule,
     JwtModule.register({
-      secret: 'your_jwt_secret', // Altere para uma chave secreta forte
+      secret: 'your_jwt_secret', 
       signOptions: { expiresIn: '60m' },
     }),
-    forwardRef(() => UsuarioModule), // Usando forwardRef para resolver a dependência circular
+    forwardRef(() => UsuarioModule), 
   ],
   providers: [AuthService, JwtStrategy],
   exports: [AuthService],

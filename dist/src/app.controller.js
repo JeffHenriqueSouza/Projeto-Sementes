@@ -22,9 +22,6 @@ let AppController = class AppController {
         this.appService = appService;
         this.feedbackService = feedbackService;
     }
-    getHello() {
-        return this.appService.getHello();
-    }
     async createFeedback(createFeedbackDto) {
         return this.feedbackService.create(createFeedbackDto);
     }
@@ -33,12 +30,6 @@ let AppController = class AppController {
     }
 };
 exports.AppController = AppController;
-__decorate([
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", String)
-], AppController.prototype, "getHello", null);
 __decorate([
     (0, common_1.Post)('feedbacks'),
     __param(0, (0, common_1.Body)()),

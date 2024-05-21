@@ -11,11 +11,6 @@ export class AppController {
     private readonly feedbackService: FeedbacksService, 
   ) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
-
   @Post('feedbacks')
   async createFeedback(@Body() createFeedbackDto: CreateFeedbackDto): Promise<Feedback> {
     return this.feedbackService.create(createFeedbackDto);

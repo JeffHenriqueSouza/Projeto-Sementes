@@ -28,16 +28,16 @@ export class UsuarioService {
     const user = await this.usuarioRepository.findOneByEmail(email);
 
     if (!user) {
-      return null; // Usuário não encontrado
+      return null; 
     }
 
     const senhaValida = await bcrypt.compare(password, user.password);
 
     if (!senhaValida) {
-      return null; // Senha inválida
+      return null; 
     }
 
-    return user; // Credenciais válidas, retorna o usuário
+    return user; 
   }
 
   async findOneByEmail(email: string): Promise<UsuarioEntity | undefined> {
