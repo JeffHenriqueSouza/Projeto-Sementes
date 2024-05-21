@@ -238,6 +238,15 @@ A arquitetura do sistema é baseada em módulos do NestJS, cada um responsável 
 - **GET /feedbacks**: Lista todos os feedbacks.
 - **GET /feedbacks/user/:userId**: Busca feedbacks para um usuário específico.
 
+  ## FUTURAS IMPLANTAÇÕES/MELHORIAS
+
+- **Swagger**: Implementação da documentação da API usando Swagger.
+- **Docker**: Implantação da aplicação em containers para facilitar o gerenciamento e escalabilidade.
+- **Refatoração**: 
+  - Implantação de Clean Architecture para tornar o código mais modular, escalável e de fácil manutenção.
+  - Criação de novas tabelas para adicionar recursos adicionais ao sistema.
+  - Implementação de novos recursos e melhorias para aprimorar a experiência do usuário.
+
 ### Documentação
 
 A documentação completa do projeto pode ser encontrada neste link = https://github.com/JeffHenriqueSouza/Projeto-Sementes/blob/main/Documenta%C3%A7%C3%A3o-%20Back%20End.docx
