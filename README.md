@@ -62,11 +62,11 @@ A arquitetura do sistema é baseada em módulos do NestJS, cada um responsável 
     ```
 4. Configure as variáveis de ambiente no arquivo `.env`:
     ```env
-    DB_HOST=dpg-cp2fsemv3ddc73cljlsg-a.oregon-postgres.render.com
+    DB_HOST=banco-teste.oregon-postgres.render.com
     DB_PORT=5432
-    DB_USERNAME=projetosementes_user
-    DB_PASSWORD=jzTZ9DP1gtbGLFWXea0YxcViMrkRsKEg
-    DB_DATABASE=projetosementes
+    DB_USERNAME=projetosementesTeste
+    DB_PASSWORD=djfkdfjdkfjfwp
+    DB_DATABASE=projetosementesTeste
     DB_SYNCHRONIZE=true
     ```
 
