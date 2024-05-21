@@ -179,3 +179,5 @@ Table feedback {
 Ref: usuarios.id < avaliacoes.usuarioAvaliadoId
 Ref: usuarios.id < feedback.userId
 Ref: avaliacoes.id < feedback.avaliacoesId
+
+A documentação completa do projeto pode ser encontrada aqui.
