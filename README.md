@@ -77,7 +77,7 @@ A arquitetura do sistema é baseada em módulos do NestJS, cada um responsável 
 
 6. Inicie o servidor:
     ```bash
-    npm run start
+    npm run start:dev
     ```
 
 ## APIs e Funcionalidades
