@@ -148,6 +148,10 @@ A arquitetura do sistema é baseada em módulos do NestJS, cada um responsável 
 - **GET /feedbacks**: Lista todos os feedbacks.
 - **GET /feedbacks/user/:userId**: Busca feedbacks para um usuário específico.
 
+### Documentação
+
+A documentação completa do projeto pode ser encontrada neste link = https://github.com/JeffHenriqueSouza/Projeto-Sementes/blob/main/Documenta%C3%A7%C3%A3o-%20Back%20End.docx
+
 ## Diagrama de Tabelas
 ```plaintext
 Table usuarios {
@@ -180,4 +184,3 @@ Ref: usuarios.id < avaliacoes.usuarioAvaliadoId
 Ref: usuarios.id < feedback.userId
 Ref: avaliacoes.id < feedback.avaliacoesId
 
-A documentação completa do projeto pode ser encontrada aqui.
