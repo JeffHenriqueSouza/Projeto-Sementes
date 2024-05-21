@@ -258,6 +258,21 @@ Este projeto utiliza GitHub Actions para CI/CD. O pipeline está configurado par
 
 O pipeline está definido no arquivo [`.github/workflows/ci-cd.yml`.](https://github.com/JeffHenriqueSouza/Projeto-Sementes/tree/main/.github/workflows)
 
+## Testes com BDD usando Gherkin e Jest
+
+Neste projeto, utilizamos a abordagem de Desenvolvimento Orientado a Comportamento (BDD) para escrever casos de teste em linguagem Gherkin e executá-los com o Jest e o Cucumber.
+
+### Estrutura de diretórios
+
+- `features`: Este diretório contém os arquivos de especificação de comportamento escritos em Gherkin.
+- `features/step_definitions`: Aqui estão os arquivos de definições de passos, onde cada passo definido em Gherkin é implementado.
+- `authenticationModule.js`: Módulo que contém a lógica de autenticação real do sistema.
+- `evaluationModule.js`: Módulo que contém a lógica de avaliação real do sistema.
+
+### Executando os testes
+
+Para executar os testes de BDD, você pode usar o seguinte comando: npm run test:features
+
 ## Diagrama de Tabelas
 ```plaintext
 Table usuarios {
