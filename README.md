@@ -238,8 +238,8 @@ A arquitetura do sistema é baseada em módulos do NestJS, cada um responsável 
 - **GET /feedbacks**: Lista todos os feedbacks.
 - **GET /feedbacks/user/:userId**: Busca feedbacks para um usuário específico.
 
-  ## FUTURAS IMPLEMENTAÇÕES/MELHORIAS
 
+## FUTURAS IMPLEMENTAÇÕES/MELHORIAS
 - **Swagger**: Implementação da documentação da API usando Swagger.
 - **Docker**: Implantação da aplicação em containers para facilitar o gerenciamento e escalabilidade.
 - **Refatoração**: 
