@@ -17,12 +17,12 @@ Feature: Avaliar um colega
     Then eu devo ver uma mensagem de confirmação "Avaliação enviada com sucesso!"
     And o perfil de João Silva deve refletir as novas notas de avaliação
 
-  Scenario: Tentar avaliar sem fornecer todas as notas
-    Given eu estou logado e no dashboard
-    When eu navego para a seção "Avaliar Colega"
-    And eu seleciono o colega "Maria Souza" da lista
-    And eu avalio comunicação como 5
-    And eu deixo as outras notas em branco
-    And eu tento enviar a avaliação
-    Then eu devo ver uma mensagem de erro "Por favor, forneça notas para todas as categorias"
-    And a avaliação não deve ser enviada
+ Scenario: Tentar avaliar sem fornecer todas as notas
+  Given eu estou logado e no dashboard
+  When eu navego para a seção "Avaliar Colega"
+  And eu seleciono o colega "Maria Souza" da lista
+  And eu avalio comunicação como 5
+  And eu deixo as outras notas em branco
+  And eu tento enviar a avaliação
+  Then eu devo ver uma mensagem de erro "Por favor, forneça notas para todas as categorias"
+  And a avaliação não deve ser enviada
